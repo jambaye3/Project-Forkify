@@ -1,4 +1,6 @@
 import icons from 'url:../../img/icons.svg';
+import { errorHandler } from '../helperFunctions';
+
 export function generateRecipeHtml(input) {
   let recipe = input[0];
   let bookmarks = input[1];
@@ -107,3 +109,7 @@ export function generateRecipeHtml(input) {
   
   return html;
 }
+
+/////////////////////////////end/////////////////////////////////////////
+
+

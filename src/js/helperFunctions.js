@@ -20,13 +20,22 @@ export function prnt(a) {
   console.log(a);
 }
 
-export function generateSpinnerHtml() {
-  return `<div class="spinner">
-    <svg>
-      <use href="${icons}#icon-loader"></use>
-    </svg>
-  </div>`;
+export function adjestServing(element1, element2, adjester) {
+  element1.textContent = +element1.textContent + adjester;
+  console.log(element2);
+  for (let i = 0; i < element2.length; i++) {
+    if (
+      isFinite(+element2[i].textContent) &&
+      +element2[i].dataset.quant_per_serving != 0
+    ) {
+      let quantPerServing = +element2[i].dataset.quant_per_serving;
+      let newQuant = +element2[i].textContent + adjester * quantPerServing;
+      element2[i].textContent = roundToNearestQuarter(newQuant);
+    }
+  }
 }
+
+
 
 export function errorHandler(result){
 let errorMessage = '';
@@ -79,48 +88,7 @@ export function roundToNearestQuarter(num) {
   return baseNum + 1;
 }
 
-
-export function generateBtnsHtml(currentPage, lastPage){
-
-if (currentPage === 1){
-   return generateNextBtnHtml(currentPage);
-} 
-   
-if (currentPage === lastPage){
-   return generatePrevBtnHtml(currentPage);
-}
-
-return  generatePrevBtnHtml(currentPage) + generateNextBtnHtml(currentPage);
-
-}
-
-function generatePrevBtnHtml(currentPage){
-
-  let html =
-          `<button class="btn--inline pagination__btn--prev">
-            <svg class="search__icon">
-              <use href="${icons}#icon-arrow-left"></use>
-            </svg>
-            <span>Page${currentPage - 1}</span>
-          </button>`
-            
-  return html;
-}
-
-function generateNextBtnHtml(currentPage){
-
-  let html =
-          `<button class="btn--inline pagination__btn--next">
-            <span>Page ${currentPage + 1}</span>
-            <svg class="search__icon">
-              <use href="${icons}#icon-arrow-right"></use>
-            </svg>
-          </button>`
-  
-  return  html
-
-}
-          
+        
 export function makeSrchSelectionActive(htmlElement){
   for (i=0; i<htmlElement.length; i++){
     if(htmlElement[i].classList.contains('preview__link--active')){
